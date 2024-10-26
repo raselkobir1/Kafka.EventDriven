@@ -5,6 +5,10 @@ VisualStudioVersion = 17.11.35312.102
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kafka.EventDriven", "Kafka.EventDriven\Kafka.EventDriven.csproj", "{09DA5E8E-2ADD-4B0F-BC75-5548DFE54423}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Producer.Service", "Producer.Service\Producer.Service.csproj", "{09AFEC8C-1A4D-495B-A96C-C3951D858447}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Consumer.Service", "Consumer.Service\Consumer.Service.csproj", "{98B0DD32-BE5A-4D66-B926-769F3E8DC6A9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +19,14 @@ Global
 		{09DA5E8E-2ADD-4B0F-BC75-5548DFE54423}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{09DA5E8E-2ADD-4B0F-BC75-5548DFE54423}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{09DA5E8E-2ADD-4B0F-BC75-5548DFE54423}.Release|Any CPU.Build.0 = Release|Any CPU
+		{09AFEC8C-1A4D-495B-A96C-C3951D858447}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{09AFEC8C-1A4D-495B-A96C-C3951D858447}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{09AFEC8C-1A4D-495B-A96C-C3951D858447}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{09AFEC8C-1A4D-495B-A96C-C3951D858447}.Release|Any CPU.Build.0 = Release|Any CPU
+		{98B0DD32-BE5A-4D66-B926-769F3E8DC6A9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{98B0DD32-BE5A-4D66-B926-769F3E8DC6A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{98B0DD32-BE5A-4D66-B926-769F3E8DC6A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{98B0DD32-BE5A-4D66-B926-769F3E8DC6A9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,6 +1,35 @@
+using Consumer.Service;
+using Microsoft.AspNetCore.Mvc;
+using Producer.Service;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+var objBuilder = new ConfigurationBuilder()
+          .SetBasePath(Directory.GetCurrentDirectory())
+          .AddJsonFile("appSettings.json", optional: true, reloadOnChange: true);
+IConfiguration configuration = objBuilder.Build();
+
+//kafka
+builder.Services.AddSingleton<IKafkaProducer>(provider =>
+{
+    var configuration = provider.GetRequiredService<IConfiguration>();
+    var bootstrapServers = configuration["KafkaProducerConfig:bootstrapServers"];
+
+    return new KafkaProducer(bootstrapServers);
+});
+
+builder.Services.AddSingleton<IKafkaConsumer>(provider =>
+{
+    var configuration = provider.GetRequiredService<IConfiguration>();
+    var bootstrapServers = configuration["KafkaConsumerConfig:BootstrapServers"];
+    var groupId = configuration["KafkaConsumerConfig:GroupId"];
+    var autoOffsetRest = configuration["KafkaConsumerConfig:AutoOffsetRest"];
+    var enableAutoOffsetStore = configuration["KafkaConsumerConfig:EnableAutoOffsetStore"];
+
+    return new KafkaConsumer(bootstrapServers, groupId, autoOffsetRest, enableAutoOffsetStore);
+});
+
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
@@ -19,5 +48,12 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
+app.MapGet("/getProductDetails", async ([FromServices] IKafkaConsumer kafkaConsumer) =>
+{
+    var topic = "order-place";
 
-app.Run();
+    await kafkaConsumer.StartConsuming(topic);
+})
+.WithName("Consumer");
+
+await app.RunAsync();
