@@ -1,5 +1,5 @@
+using Confluent.Kafka;
 using Consumer.Service;
-using Microsoft.AspNetCore.Mvc;
 using Producer.Service;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -19,14 +19,13 @@ builder.Services.AddSingleton<IKafkaProducer>(provider =>
     return new KafkaProducer(bootstrapServers);
 });
 
-builder.Services.AddSingleton<IKafkaConsumer>(provider =>
+builder.Services.AddHostedService(provider =>
 {
     var configuration = provider.GetRequiredService<IConfiguration>();
     var bootstrapServers = configuration["KafkaConsumerConfig:BootstrapServers"];
     var groupId = configuration["KafkaConsumerConfig:GroupId"];
     var autoOffsetRest = configuration["KafkaConsumerConfig:AutoOffsetRest"];
     var enableAutoOffsetStore = configuration["KafkaConsumerConfig:EnableAutoOffsetStore"];
-
     return new KafkaConsumer(bootstrapServers, groupId, autoOffsetRest, enableAutoOffsetStore);
 });
 
@@ -48,12 +47,4 @@ if (app.Environment.IsDevelopment())
 app.UseAuthorization();
 
 app.MapControllers();
-app.MapGet("/getProductDetails", async ([FromServices] IKafkaConsumer kafkaConsumer) =>
-{
-    var topic = "order-place";
-
-    await kafkaConsumer.StartConsuming(topic);
-})
-.WithName("Consumer");
-
 await app.RunAsync();
