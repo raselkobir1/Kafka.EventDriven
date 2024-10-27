@@ -1,37 +1,30 @@
-using Confluent.Kafka;
 using Consumer.Service;
 using Producer.Service;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-var objBuilder = new ConfigurationBuilder()
-          .SetBasePath(Directory.GetCurrentDirectory())
-          .AddJsonFile("appSettings.json", optional: true, reloadOnChange: true);
-IConfiguration configuration = objBuilder.Build();
-
 //kafka
 builder.Services.AddSingleton<IKafkaProducer>(provider =>
 {
     var configuration = provider.GetRequiredService<IConfiguration>();
-    var bootstrapServers = configuration["KafkaProducerConfig:bootstrapServers"];
+    var bootstrapServers = configuration["KafkaProducerConfig:bootstrapServers"] ?? string.Empty;
+    var clientId = configuration["KafkaProducerConfig:clientId"] ?? string.Empty;
 
-    return new KafkaProducer(bootstrapServers);
+    return new KafkaProducer(bootstrapServers, clientId);
 });
 
 builder.Services.AddHostedService(provider =>
 {
     var configuration = provider.GetRequiredService<IConfiguration>();
-    var bootstrapServers = configuration["KafkaConsumerConfig:BootstrapServers"];
-    var groupId = configuration["KafkaConsumerConfig:GroupId"];
-    var autoOffsetRest = configuration["KafkaConsumerConfig:AutoOffsetRest"];
-    var enableAutoOffsetStore = configuration["KafkaConsumerConfig:EnableAutoOffsetStore"];
+    var bootstrapServers = configuration["KafkaConsumerConfig:BootstrapServers"] ?? string.Empty;
+    var groupId = configuration["KafkaConsumerConfig:GroupId"] ?? string.Empty;
+    var autoOffsetRest = configuration["KafkaConsumerConfig:AutoOffsetRest"] ?? string.Empty;
+    var enableAutoOffsetStore = configuration["KafkaConsumerConfig:EnableAutoOffsetStore"] ?? string.Empty;
     return new KafkaConsumer(bootstrapServers, groupId, autoOffsetRest, enableAutoOffsetStore);
 });
 
 
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

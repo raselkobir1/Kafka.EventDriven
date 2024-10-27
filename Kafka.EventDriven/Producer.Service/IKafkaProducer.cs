@@ -8,6 +8,6 @@ namespace Producer.Service
 {
     public interface IKafkaProducer
     {
-        public Task SendMessage<T>(string topic, string key, T message);
+        public Task Producer<T>(string topic, string key, T message); 
     }
 }

@@ -1,7 +1,6 @@
 ﻿
 using Confluent.Kafka;
 using Microsoft.Extensions.Hosting;
-using System.Threading;
 
 namespace Consumer.Service
 {
@@ -35,7 +34,6 @@ namespace Consumer.Service
 
         public void ConsumerDispose()
         {
-            // Properly dispose of the Kafka consumer
             kafkaConsumer?.Dispose();
         }
 
@@ -50,21 +48,17 @@ namespace Consumer.Service
                 {
                     try
                     {
-                        // Consume messages from the Kafka topic
                         var consumeResult = kafkaConsumer.Consume(CancellationToken.None);
                         if (consumeResult is null)
                         {
                             return;
                         }
-
-                        // Process the consumed message (implement your logic here)
                         Console.WriteLine($"Received message: {consumeResult.Offset} \n");
                         Console.WriteLine($"Received message: {consumeResult.Message.Key} \n");
                         Console.WriteLine($"Received message: {consumeResult.Message.Value} \n\n\n");
                     }
                     catch (ConsumeException ex)
                     {
-                        // Handle any errors that occur during message consumption
                         Console.WriteLine($"Error consuming message: {ex.Error.Reason}");
                     }
                 }
@@ -74,7 +68,7 @@ namespace Consumer.Service
 
         public Task StopAsync(CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            return Task.CompletedTask;
         }
     }
 }

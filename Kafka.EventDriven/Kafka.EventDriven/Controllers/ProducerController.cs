@@ -1,5 +1,4 @@
 ﻿using Kafka.EventDriven.Controllers.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Producer.Service;
 
@@ -20,7 +19,7 @@ namespace Kafka.EventDriven.Controllers
         {
             var topic = "order-place";
             var key = "Key_1";
-            await _kafkaProducer.SendMessage(topic,key,orderDetails);
+            await _kafkaProducer.Producer(topic,key,orderDetails);
             return Ok("Order placed successfully");
         }
     }
