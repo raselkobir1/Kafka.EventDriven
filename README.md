@@ -12,9 +12,11 @@ Kafka is an open-source platform for handling real-time data streams. It lets ap
    Apache Kafka is highly scalable, supporting high-performance sequential writes and partitioning topics to facilitate efficient reads and writes. This allows for multiple producers and consumers to read and write simultaneously.
 
 - **High Throughput**  
-   Apache Kafka can handle large volumes of messages at high velocities, supporting up to 10K messages per second or up to one million bytes per request.
+   Throughput is a measure of the number of messages that arrive at a given point in time. Apache Kafka is capable of handling massive volumes of incoming messages 
+   at a high velocity per second (around 10K messages per second or a maximum request size of one million bytes per request, whichever comes first).
 
 - **Low Latency**  
+   Latency refers to the amount of time required to process each message. Apache Kafka can provide high throughput with low latency and high availability.
    Kafka provides high throughput with low latency, enabling rapid message processing with high availability.
 
 - **Durability**  
