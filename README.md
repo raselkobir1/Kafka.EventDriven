@@ -54,7 +54,10 @@ Kafka is an open-source platform for handling real-time data streams. It lets ap
 
 - **Kafka Broker**  
    Brokers act as intermediaries between producers and consumers, hosting topics and partitions. Producers and consumers do not communicate directly; instead, they interact via brokers. This design ensures continued functionality even if a producer or consumer fails.
-
+<img
+src=“https://code-maze.com/wp-content/uploads/2024/04/Kafka-flow-1-2.png”
+raw=true alt=“Subject Pronouns”
+style=“margin-right: 10px;”/>
 ---
 
 Apache Kafka is an essential tool for real-time data streaming and high-performance messaging across scalable applications, providing robustness and flexibility to support a variety of use cases.
