@@ -4,24 +4,20 @@ ARG BUILD_CONFIGURATION=Release
 ARG RUNTIME=linux-musl-x64
 WORKDIR /src
 
-# Copy only project files for caching
+# Copy only project files to optimize Docker caching
 COPY ["Kafka.EventDriven/Kafka.EventDriven/Kafka.EventDriven.csproj", "Kafka.EventDriven/"]
 COPY ["Kafka.EventDriven/Producer.Service/Producer.Service.csproj", "Producer.Service/"]
 COPY ["Kafka.EventDriven/Consumer.Service/Consumer.Service.csproj", "Consumer.Service/"]
-# Restore dependencies
 
-RUN dotnet restore \
-    "./Kafka.EventDriven/Kafka.EventDriven.csproj" \
-    -r "$RUNTIME"
+# Restore dependencies
+RUN dotnet restore "Kafka.EventDriven/Kafka.EventDriven.csproj" -r "$RUNTIME"
 
 # Copy the entire source after restore to prevent re-restoring
 COPY . .
 
 # Publish the application
-RUN dotnet publish \
-    "./Kafka.EventDriven/Kafka.EventDriven.csproj" \
-    -c "$BUILD_CONFIGURATION" \
-    -r "$RUNTIME" \
+#RUN dotnet clean "Kafka.EventDriven/Kafka.EventDriven.csproj"
+RUN dotnet publish  "Kafka.EventDriven/Kafka.EventDriven.csproj"  -c "$BUILD_CONFIGURATION"  -r "$RUNTIME" \
     --self-contained false \
     -o /app/publish \
     /p:UseAppHost=false \
@@ -38,4 +34,4 @@ USER app
 EXPOSE 8080
 
 COPY --from=build /app/publish .
-ENTRYPOINT ["dotnet", "Kafka.EventDriven.dll"]    
+ENTRYPOINT ["dotnet", "Kafka.EventDriven.dll"]
