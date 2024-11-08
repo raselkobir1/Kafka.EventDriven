@@ -16,7 +16,6 @@ RUN dotnet restore "Kafka.EventDriven/Kafka.EventDriven.csproj" -r "$RUNTIME"
 COPY . .
 
 # Publish the application
-#RUN dotnet clean "Kafka.EventDriven/Kafka.EventDriven.csproj"
 RUN dotnet publish  "Kafka.EventDriven/Kafka.EventDriven.csproj"  -c "$BUILD_CONFIGURATION"  -r "$RUNTIME" \
     --self-contained false \
     -o /app/publish \

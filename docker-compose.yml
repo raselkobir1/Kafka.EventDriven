@@ -12,3 +12,18 @@ services:
         limits:
           cpus: "1"
           memory: 1G
+
+
+
+ #To push your newly created local image (accounting-backend-web:latest) to your private Docker Hub repository, follow these steps:     
+ # --------------------------------------------------------------------------------------------------------------------------------
+ # 1. Tag the local Image for Docker Hub username and repository name
+ # docker tag accounting-backend-web:latest raselkabir7868/accounting-backend-web:latest
+
+ # 2. Push the Tagged Image to Docker Hub
+ # docker push raselkabir7868/accounting-backend-web:latest
+ # check on docker hub. 
+ 
+ # Run the Image on Any Server or Environment
+ # docker pull raselkabir7868/accounting-backend-web:latest
+ # docker run -d -p 80:80 raselkabir7868/accounting-backend-web:latest
