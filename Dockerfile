@@ -34,3 +34,6 @@ EXPOSE 8080
 
 COPY --from=build /app/publish .
 ENTRYPOINT ["dotnet", "Kafka.EventDriven.dll"]
+
+
+# Image create process OK but something went wrong for project terget version.
